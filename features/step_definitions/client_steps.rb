@@ -7,12 +7,16 @@ class TestClient
     @messages = []
   end
 
+  def connected?
+    !select([@socket], nil, nil, 0.1)
+  end
+
   def send_command(data)
     @socket.write("#{data}\r\n")
   end
 
   def messages
-    update_messages!
+    return @messages.concat(@buffer.extract(text)) if @messages.empty?
     @messages
   end
 
@@ -22,11 +26,6 @@ class TestClient
 
   def close
     @socket.close
-  end
-
-  def update_messages!
-    @messages.concat @buffer.extract(text)
-    @messages
   end
 end
 
@@ -48,6 +47,11 @@ Given /^I am connected to the server$/ do
   When "I connect to the server"
 end
 
+Given /^I have set my name as "([^"]*)"$/ do |name|
+  Given "I am connected to the server"
+  When "I send \"SETNAME #{name}\""
+end
+
 When /^I connect to the server$/ do
   @client = TestClient.new('localhost', 9001)
 end
@@ -56,12 +60,18 @@ When /^I send "([^"]*)"$/ do |command|
   @client.send_command(command)
 end
 
+When /^I wait (\d+) seconds$/ do |count|
+  sleep count.to_i
+end
+
 Then /^I should see "([^"]*)"$/ do |message|
   @client.messages.should include(message)
 end
 
 Then /^I should see$/ do |message|
-  #puts message
-  #puts message.tr("\n", "\r\n")
   @client.text.should include(message.gsub(/\n/, "\r\n"))
+end
+
+Then /^I should get disconnected$/ do
+  @client.should_not be_connected
 end
