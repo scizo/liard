@@ -14,6 +14,7 @@ GEM
     gherkin (2.5.1)
       json (>= 1.4.6)
     json (1.6.1)
+    multi_json (1.0.3)
     rspec (2.6.0)
       rspec-core (~> 2.6.0)
       rspec-expectations (~> 2.6.0)
@@ -22,6 +23,10 @@ GEM
     rspec-expectations (2.6.0)
       diff-lcs (~> 1.1.2)
     rspec-mocks (2.6.0)
+    simplecov (0.5.4)
+      multi_json (~> 1.0.3)
+      simplecov-html (~> 0.5.3)
+    simplecov-html (0.5.3)
     term-ansicolor (1.0.6)
 
 PLATFORMS
@@ -32,3 +37,4 @@ DEPENDENCIES
   evented-spec
   eventmachine
   rspec
+  simplecov
