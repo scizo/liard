@@ -38,19 +38,46 @@ describe ServerConnection do
       @callable = stub('callable').as_null_object
     end
 
-    it 'gets the command that based on the first word in the line' do
-      Commands.should_receive(:get_command).with('HELP').and_return(@callable)
+    context 'given the player has not been set' do
+      context 'given the help or setname command' do
+        it 'gets the command and calls it' do
+          Commands.should_receive(:get_command).with('HELP').and_return(@callable)
+          @callable.should_receive(:call).with(@connection, [])
 
-      @connection.receive_line('help please')
-      done
+          @connection.receive_line('help')
+          done
+        end
+      end
+
+      context 'given any other command' do
+        it 'sends the must set name error message' do
+          @connection.should_receive(:error).with('Must set name first')
+
+          @connection.receive_line('who')
+          done
+        end
+      end
     end
 
-    it 'calls the command with the connection and the given args' do
-      Commands.stub(:get_command).and_return(@callable)
-      @callable.should_receive(:call).with(@connection, ['fred', 'bob'])
+    context 'given the player has been set' do
+      em_before do
+        @connection.player = double('player')
+      end
 
-      @connection.receive_line('who fred bob')
-      done
+      it 'gets the command based on the first word in the received line' do
+        Commands.should_receive(:get_command).with('HELP').and_return(@callable)
+
+        @connection.receive_line('help please')
+        done
+      end
+
+      it 'calls the command with the connection and the given args' do
+        Commands.stub(:get_command).and_return(@callable)
+        @callable.should_receive(:call).with(@connection, ['fred', 'bob'])
+
+        @connection.receive_line('who fred bob')
+        done
+      end
     end
   end
 
