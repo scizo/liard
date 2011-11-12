@@ -25,7 +25,7 @@ class TestClient
   end
 
   def close
-    @socket.close
+    @socket.close if connected?
   end
 end
 

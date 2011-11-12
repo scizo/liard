@@ -22,8 +22,9 @@ module Liard
 
     def receive_line(line)
       command, *args = line.split
-      command_callable = Commands.get_command(command.upcase)
-      command_callable.call(self, args)
+		  return error('Must set name first') unless player || ['SETNAME', 'HELP'].include?(command.upcase)
+      callable = Commands.get_command(command.upcase)
+      callable.call(self, args)
     end
 
     def send(data)
@@ -31,7 +32,7 @@ module Liard
     end
 
     def error(message)
-      send_data("ERROR #{message}\r\n")
+      send_data "ERROR #{message}\r\n"
     end
 
     def set_timer(seconds, &block)
