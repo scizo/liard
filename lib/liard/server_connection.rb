@@ -1,5 +1,5 @@
 require 'eventmachine'
-require 'liard/commands'
+require_relative 'commands'
 
 module Liard
   module ServerConnection
@@ -16,7 +16,7 @@ module Liard
       send_data "Welcome to Liard!!!\r\n"
       set_timer(15) do
         error('Must set name within 15 seconds')
-        close_connection(true)
+        close_connection
       end
     end
 

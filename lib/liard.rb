@@ -1,1 +1,1 @@
-require 'liard/server'
+require_relative 'liard/server'

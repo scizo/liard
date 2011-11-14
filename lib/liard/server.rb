@@ -1,4 +1,4 @@
-require 'liard/server_connection'
+require_relative 'server_connection'
 
 module Liard
   class Server

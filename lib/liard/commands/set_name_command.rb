@@ -1,5 +1,5 @@
-require 'liard/commands/command'
-require 'liard/player'
+require_relative 'command'
+require_relative '../player'
 
 module Liard
   module Commands

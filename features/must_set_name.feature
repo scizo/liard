@@ -1,11 +1,12 @@
-Feature: client issues help command
+Feature: cannot issues commands without setting name
 
-  As a client
-  I want to be able to issue the help command
-  So that I can see the help
+  Before a client is able to issue commands they must first set their name
+  The only exception is the help command
+
+  Background:
+    Given I am connected to the server
 
   Scenario: issue help command
-    Given I am connected to the server
     When I send "HELP"
     Then I should see
       """
@@ -33,7 +34,23 @@ Feature: client issues help command
         RESULT <name> <#> [<#> ...]       Reveals another person's roll (after a challenge)
         ROLL <#> [<#> ...]                Your roll for the round
         STARTING                          Indicates a restart in 15 seconds or when all clients report ready (whichever occurs first)
+        MESSAGE <message>                 Precedes any general communication from the server
+        ERROR <message>                   Precedes any error communications from the server
 
       *Must be called before other commands and within 15 seconds of connecting.
 
       """
+
+  Scenario: issue command without name being set
+    When I send "WHO"
+    Then I should see "ERROR Must set name first"
+
+  Scenario: list players after setting name
+    When I send "SETNAME scott"
+    And I send "WHO"
+    Then I should see "PLAYER scott 0"
+
+  Scenario: do not set name
+    When I wait 17 seconds
+    Then I should see "ERROR Must set name within 15 seconds"
+    And I should get disconnected

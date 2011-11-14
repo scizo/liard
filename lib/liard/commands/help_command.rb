@@ -30,6 +30,8 @@ module Liard
   RESULT <name> <#> [<#> ...]       Reveals another person's roll (after a challenge)
   ROLL <#> [<#> ...]                Your roll for the round
   STARTING                          Indicates a restart in 15 seconds or when all clients report ready (whichever occurs first)
+  MESSAGE <message>                 Precedes any general communication from the server
+  ERROR <message>                   Precedes any error communications from the server
 
 *Must be called before other commands and within 15 seconds of connecting."""
 		end

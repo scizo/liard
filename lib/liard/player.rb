@@ -10,5 +10,9 @@ module Liard
     def number_of_dice
       0
     end
+
+    def send(message)
+      @connection.send(message)
+    end
   end
 end

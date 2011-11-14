@@ -1,8 +1,6 @@
 Feature: client connects to server
 
-  As a client
-  I want to connect to the server
-  So that I can play the game
+  First things first: A client must be able to connect to the server
 
   Scenario: connect to server
     Given The server is running

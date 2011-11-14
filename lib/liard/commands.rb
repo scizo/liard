@@ -1,14 +1,14 @@
-require 'liard/commands/help_command'
-require 'liard/commands/set_name_command'
-require 'liard/commands/who_command'
+require_relative 'commands/help_command'
+require_relative 'commands/set_name_command'
+require_relative 'commands/who_command'
 
 module Liard
-	module Commands
-		COMMANDS = {
-			'HELP' => HelpCommand,
-			'SETNAME' => SetNameCommand,
-			'WHO' => WhoCommand
-		}
+  module Commands
+    COMMANDS = {
+      'HELP' => HelpCommand,
+      'SETNAME' => SetNameCommand,
+      'WHO' => WhoCommand
+    }
 
     class UnknownCommand
       def initialize(command)
