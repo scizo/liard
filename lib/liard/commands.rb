@@ -1,13 +1,17 @@
 require_relative 'commands/help_command'
 require_relative 'commands/set_name_command'
 require_relative 'commands/who_command'
+require_relative 'commands/ready_command'
+require_relative 'commands/unready_command'
 
 module Liard
   module Commands
     COMMANDS = {
       'HELP' => HelpCommand,
       'SETNAME' => SetNameCommand,
-      'WHO' => WhoCommand
+      'WHO' => WhoCommand,
+      'READY' => ReadyCommand,
+      'UNREADY' => UnreadyCommand
     }
 
     class UnknownCommand

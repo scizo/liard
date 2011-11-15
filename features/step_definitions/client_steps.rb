@@ -108,16 +108,19 @@ Then /^the other players should see "([^"]*)"$/ do |message|
 end
 
 Then /^I should get a roll with (\d+) dice$/ do |count|
-  roll = /^ROLL ([1-6] ){#{count - 1}}[1-6]$/
-  @client.messages.should include(roll)
+  roll = /^ROLL ([1-6] ){#{count.to_i - 1}}[1-6]$/
   @client.messages.any?{|m| m =~ roll}.should be(true)
 end
 
-Then /^player_(\d+) has (\d+) dice$/ do |player_number, count|
+Then /^player_(\d+) has ([1-9]) dice$/ do |player_number, count|
   player = @other_players[player_number.to_i - 1]
-  roll = /^ROLL ([1-6] ){#{count - 1}}[1-6]$/
-  player.messages.should include(roll)
+  roll = /^ROLL ([1-6] ){#{count.to_i - 1}}[1-6]$/
   player.messages.any?{|m| m =~ roll}.should be(true)
+end
+
+Then /^player_(\d+) has 0 dice$/ do |player_number|
+  player = @other_players[player_number.to_i - 1]
+  player.messages.all?{|m| m !~ /^ROLL/}.should be(true)
 end
 
 Then /^I should get disconnected$/ do
