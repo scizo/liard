@@ -30,6 +30,7 @@ class TestClient
 end
 
 Before do
+  Liard::Random.seed(5)
   thread = Thread.new { EM.run }
   thread.abort_on_exception = true
   thread.run
@@ -109,12 +110,14 @@ end
 
 Then /^I should get a roll with (\d+) dice$/ do |count|
   roll = /^ROLL ([1-6] ){#{count.to_i - 1}}[1-6]$/
+  #puts @client.messages.find{|m| m =~ roll}
   @client.messages.any?{|m| m =~ roll}.should be(true)
 end
 
 Then /^player_(\d+) has ([1-9]) dice$/ do |player_number, count|
   player = @other_players[player_number.to_i - 1]
   roll = /^ROLL ([1-6] ){#{count.to_i - 1}}[1-6]$/
+  #puts player.messages.find{|m| m =~ roll}
   player.messages.any?{|m| m =~ roll}.should be(true)
 end
 
