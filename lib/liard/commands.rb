@@ -24,8 +24,8 @@ module Liard
       end
     end
 
-		def self.get_command(command_name)
-			COMMANDS.fetch(command_name, UnknownCommand.new(command_name))
-		end
-	end
+    def self.get_command(command_name)
+      COMMANDS.fetch(command_name, UnknownCommand.new(command_name))
+    end
+  end
 end

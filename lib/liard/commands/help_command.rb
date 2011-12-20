@@ -1,11 +1,11 @@
 module Liard
   module Commands
-		module HelpCommand
+    module HelpCommand
       def self.call(connection, args)
         connection.send HELP_MESSAGE
       end
 
-			HELP_MESSAGE = """\
+      HELP_MESSAGE = """\
   -- Commands from client
 
   HELP [<command>]                  Lists these commands, or command specific help if a command is given
@@ -34,6 +34,6 @@ module Liard
   ERROR <message>                   Precedes any error communications from the server
 
 *Must be called before other commands and within 15 seconds of connecting."""
-		end
+    end
   end
 end

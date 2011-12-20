@@ -22,7 +22,7 @@ module Liard
 
     def receive_line(line)
       command, *args = line.split
-		  return error('Must set name first') unless player || ['SETNAME', 'HELP'].include?(command.upcase)
+      return error('Must set name first') unless player || ['SETNAME', 'HELP'].include?(command.upcase)
       callable = Commands.get_command(command.upcase)
       callable.call(self, args)
     end
